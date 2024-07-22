@@ -1,6 +1,6 @@
 /**
  *Submitted for verification at BscScan.com on 2021-12-14
-*/
+ */
 
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.9;
@@ -15,14 +15,15 @@ interface IERC20 {
 
     function balanceOf(address account) external view returns (uint256);
 
-    function transfer(address recipient, uint256 amount)
-        external
-        returns (bool);
+    function transfer(
+        address recipient,
+        uint256 amount
+    ) external returns (bool);
 
-    function allowance(address owner, address spender)
-        external
-        view
-        returns (uint256);
+    function allowance(
+        address owner,
+        address spender
+    ) external view returns (uint256);
 
     function approve(address spender, uint256 amount) external returns (bool);
 
@@ -140,11 +141,7 @@ abstract contract Ownable is Context {
 }
 
 library SafeERC20 {
-    function safeTransfer(
-        IERC20 token,
-        address to,
-        uint256 value
-    ) internal {
+    function safeTransfer(IERC20 token, address to, uint256 value) internal {
         require(token.transfer(to, value));
     }
 
@@ -271,6 +268,7 @@ contract SeedifyLaunchpad is Ownable, Pausable {
         totalUsers = _totalUsers;
         phaseNo = _phaseNo;
     }
+
     function updateMaxCap(uint256 _maxCap) public onlyOwner {
         require(_maxCap > 0, "Zero max cap");
         maxCap = _maxCap;
@@ -330,10 +328,10 @@ contract SeedifyLaunchpad is Ownable, Pausable {
         }
     }
 
-    function updateUsers(address[] memory _users, uint256[] memory _tiers)
-        external
-        onlyOwner
-    {
+    function updateUsers(
+        address[] memory _users,
+        uint256[] memory _tiers
+    ) external onlyOwner {
         require(_users.length == _tiers.length, "Array length mismatch");
         for (uint256 i = 0; i < _users.length; i++) {
             require(_tiers[i] > 0 && _tiers[i] <= noOfTiers, "Invalid tier");
@@ -341,12 +339,9 @@ contract SeedifyLaunchpad is Ownable, Pausable {
         }
     }
 
-    function buyTokens(uint256 amount)
-        external
-        whenNotPaused
-        _hasAllowance(msg.sender, amount)
-        returns (bool)
-    {
+    function buyTokens(
+        uint256 amount
+    ) external whenNotPaused _hasAllowance(msg.sender, amount) returns (bool) {
         require(block.timestamp >= saleStart, "Sale not started yet");
         require(block.timestamp <= saleEnd, "Sale Ended");
         require(

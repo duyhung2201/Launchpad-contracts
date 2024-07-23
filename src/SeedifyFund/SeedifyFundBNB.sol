@@ -3,7 +3,7 @@
  *Decentralized Incubator
  *A disruptive blockchain incubator program / decentralized seed stage fund, empowered through DAO based community-involvement mechanisms
  */
-pragma solidity ^0.6.0;
+pragma solidity ^0.8.9;
 
 // SPDX-License-Identifier: UNLICENSED
 
@@ -136,10 +136,10 @@ contract SeedifyFundsContract is Ownable {
         uint256 _tierFiveValue,
         uint256 _tierSixValue,
         uint256 _tierSevenValue,
-        uint256 _tierEightValue,
-        uint256 _tierNineValue,
+        // uint256 _tierEightValue,
+        // uint256 _tierNineValue,
         uint _totalparticipants
-    ) public {
+    ) {
         maxCap = _maxCap;
         saleStartTime = _saleStartTime;
         saleEndTime = _saleEndTime;
@@ -152,8 +152,8 @@ contract SeedifyFundsContract is Ownable {
         tierFiveMaxCap = _tierFiveValue;
         tierSixMaxCap = _tierSixValue;
         tierSevenMaxCap = _tierSevenValue;
-        tierEightMaxCap = _tierEightValue;
-        tierNineMaxCap = _tierNineValue;
+        // tierEightMaxCap = _tierEightValue;
+        // tierNineMaxCap = _tierNineValue;
 
         minAllocaPerUserTierOne = 1000000000000000;
         minAllocaPerUserTierTwo = 1000000000000000;
@@ -456,8 +456,11 @@ contract SeedifyFundsContract is Ownable {
 
     // send bnb to the contract address
     receive() external payable {
-        require(now >= saleStartTime, "The sale is not started yet "); // solhint-disable
-        require(now <= saleEndTime, "The sale is closed"); // solhint-disable
+        require(
+            block.timestamp >= saleStartTime,
+            "The sale is not started yet "
+        ); // solhint-disable
+        require(block.timestamp <= saleEndTime, "The sale is closed"); // solhint-disable
         require(
             totalBnbReceivedInAllTier + msg.value <= maxCap,
             "buyTokens: purchase would exceed max cap"

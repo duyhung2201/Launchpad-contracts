@@ -3,7 +3,7 @@
  */
 
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.9;
+pragma solidity ^0.8.9;
 
 /**
  * @dev Interface of the ERC20 standard as defined in the EIP. Does not include
@@ -44,7 +44,7 @@ interface IERC20 {
 
 // File: openzeppelin-solidity/contracts/math/SafeMath.sol
 
-pragma solidity 0.8.9;
+pragma solidity ^0.8.9;
 
 library SafeMath {
     function add(uint256 a, uint256 b) internal pure returns (uint256) {
@@ -98,7 +98,7 @@ abstract contract Context {
     }
 }
 
-pragma solidity 0.8.9;
+pragma solidity ^0.8.9;
 
 abstract contract Ownable is Context {
     address private _owner;

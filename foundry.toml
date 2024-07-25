@@ -1,6 +1,10 @@
 [profile.default]
-src = "src"
+src = "src/Seedify"
 out = "out"
 libs = ["lib"]
 
-# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
+[rpc_endpoints]
+open_campus = "${RPC_URL}"
+
+[etherscan]
+open_campus = { key = "${API_KEY}", url = "https://opencampus.gelatoscout.com/api" }

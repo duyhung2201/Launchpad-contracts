@@ -1,5 +1,7 @@
-## Foundry
+# How launchpad works
+https://book.getfoundry.sh/config/hardhat
 
+# Foundry
 **Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
 
 Foundry consists of:
@@ -64,3 +66,6 @@ $ forge --help
 $ anvil --help
 $ cast --help
 ```
+
+# Integrate Hardhat to Foundry project
+https://book.getfoundry.sh/config/hardhat

@@ -3,7 +3,6 @@ pragma solidity ^0.8.13;
 
 import {Script, console} from "forge-std/Script.sol";
 import {SeedifyFundsContract} from "../src/SeedifyFund/SeedifyFundBNB.sol";
-import "../src/SeedifyFund/Learn2Earn.sol";
 
 contract SeedifyBNBScript is Script {
     function setUp() public {}

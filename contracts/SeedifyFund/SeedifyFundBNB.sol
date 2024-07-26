@@ -14,7 +14,7 @@ import "../Ownable/Ownable.sol";
 contract SeedifyFundsContract is Ownable {
     //token attributes
     string public constant NAME = "Seedify.funds"; //name of the contract
-    uint public immutable maxCap; // Max cap in BNB
+    uint256 public immutable maxCap; // Max cap in BNB
     uint256 public immutable saleStartTime; // start sale time
     uint256 public immutable saleEndTime; // end sale time
     uint256 public totalBnbReceivedInAllTier; // total bnd received
@@ -27,52 +27,52 @@ contract SeedifyFundsContract is Ownable {
     uint256 public totalBnbInTierSeven; // total bnb for tier Seven
     uint256 public totalBnbInTierEight; // total bnb for tier Eight
     uint256 public totalBnbInTierNine; // total bnb for tier Nine
-    uint public totalparticipants; // total participants in ido
+    uint256 public totalparticipants; // total participants in ido
     address payable public projectOwner; // project Owner
 
     // max cap per tier
-    uint public tierOneMaxCap;
-    uint public tierTwoMaxCap;
-    uint public tierThreeMaxCap;
-    uint public tierFourMaxCap;
-    uint public tierFiveMaxCap;
-    uint public tierSixMaxCap;
-    uint public tierSevenMaxCap;
-    uint public tierEightMaxCap;
-    uint public tierNineMaxCap;
+    uint256 public tierOneMaxCap;
+    uint256 public tierTwoMaxCap;
+    uint256 public tierThreeMaxCap;
+    uint256 public tierFourMaxCap;
+    uint256 public tierFiveMaxCap;
+    uint256 public tierSixMaxCap;
+    uint256 public tierSevenMaxCap;
+    uint256 public tierEightMaxCap;
+    uint256 public tierNineMaxCap;
 
     //total users per tier
-    uint public totalUserInTierOne;
-    uint public totalUserInTierTwo;
-    uint public totalUserInTierThree;
-    uint public totalUserInTierFour;
-    uint public totalUserInTierFive;
-    uint public totalUserInTierSix;
-    uint public totalUserInTierSeven;
-    uint public totalUserInTierEight;
-    uint public totalUserInTierNine;
+    uint256 public totalUserInTierOne;
+    uint256 public totalUserInTierTwo;
+    uint256 public totalUserInTierThree;
+    uint256 public totalUserInTierFour;
+    uint256 public totalUserInTierFive;
+    uint256 public totalUserInTierSix;
+    uint256 public totalUserInTierSeven;
+    uint256 public totalUserInTierEight;
+    uint256 public totalUserInTierNine;
 
     //max allocations per user in a tier
-    uint public maxAllocaPerUserTierOne;
-    uint public maxAllocaPerUserTierTwo;
-    uint public maxAllocaPerUserTierThree;
-    uint public maxAllocaPerUserTierFour;
-    uint public maxAllocaPerUserTierFive;
-    uint public maxAllocaPerUserTierSix;
-    uint public maxAllocaPerUserTierSeven;
-    uint public maxAllocaPerUserTierEight;
-    uint public maxAllocaPerUserTierNine;
+    uint256 public maxAllocaPerUserTierOne;
+    uint256 public maxAllocaPerUserTierTwo;
+    uint256 public maxAllocaPerUserTierThree;
+    uint256 public maxAllocaPerUserTierFour;
+    uint256 public maxAllocaPerUserTierFive;
+    uint256 public maxAllocaPerUserTierSix;
+    uint256 public maxAllocaPerUserTierSeven;
+    uint256 public maxAllocaPerUserTierEight;
+    uint256 public maxAllocaPerUserTierNine;
 
     //min allocation per user in a tier
-    uint public minAllocaPerUserTierOne;
-    uint public minAllocaPerUserTierTwo;
-    uint public minAllocaPerUserTierThree;
-    uint public minAllocaPerUserTierFour;
-    uint public minAllocaPerUserTierFive;
-    uint public minAllocaPerUserTierSix;
-    uint public minAllocaPerUserTierSeven;
-    uint public minAllocaPerUserTierEight;
-    uint public minAllocaPerUserTierNine;
+    uint256 public minAllocaPerUserTierOne;
+    uint256 public minAllocaPerUserTierTwo;
+    uint256 public minAllocaPerUserTierThree;
+    uint256 public minAllocaPerUserTierFour;
+    uint256 public minAllocaPerUserTierFive;
+    uint256 public minAllocaPerUserTierSix;
+    uint256 public minAllocaPerUserTierSeven;
+    uint256 public minAllocaPerUserTierEight;
+    uint256 public minAllocaPerUserTierNine;
 
     // address array for tier one whitelist
     address[] private whitelistTierOne;
@@ -102,30 +102,30 @@ contract SeedifyFundsContract is Ownable {
     address[] private whitelistTierNine;
 
     //mapping the user purchase per tier
-    mapping(address => uint) public buyInOneTier;
-    mapping(address => uint) public buyInTwoTier;
-    mapping(address => uint) public buyInThreeTier;
-    mapping(address => uint) public buyInFourTier;
-    mapping(address => uint) public buyInFiveTier;
-    mapping(address => uint) public buyInSixTier;
-    mapping(address => uint) public buyInSevenTier;
-    mapping(address => uint) public buyInEightTier;
-    mapping(address => uint) public buyInNineTier;
+    mapping(address => uint256) public buyInOneTier;
+    mapping(address => uint256) public buyInTwoTier;
+    mapping(address => uint256) public buyInThreeTier;
+    mapping(address => uint256) public buyInFourTier;
+    mapping(address => uint256) public buyInFiveTier;
+    mapping(address => uint256) public buyInSixTier;
+    mapping(address => uint256) public buyInSevenTier;
+    mapping(address => uint256) public buyInEightTier;
+    mapping(address => uint256) public buyInNineTier;
 
     //mapping the user purchase per tier
-    mapping(address => uint) public minBuyInOneTier;
-    mapping(address => uint) public minBuyInTwoTier;
-    mapping(address => uint) public minBuyInThreeTier;
-    mapping(address => uint) public minBuyInFourTier;
-    mapping(address => uint) public minBuyInFiveTier;
-    mapping(address => uint) public minBuyInSixTier;
-    mapping(address => uint) public minBuyInSevenTier;
-    mapping(address => uint) public minBuyInEightTier;
-    mapping(address => uint) public minBuyInNineTier;
+    mapping(address => uint256) public minBuyInOneTier;
+    mapping(address => uint256) public minBuyInTwoTier;
+    mapping(address => uint256) public minBuyInThreeTier;
+    mapping(address => uint256) public minBuyInFourTier;
+    mapping(address => uint256) public minBuyInFiveTier;
+    mapping(address => uint256) public minBuyInSixTier;
+    mapping(address => uint256) public minBuyInSevenTier;
+    mapping(address => uint256) public minBuyInEightTier;
+    mapping(address => uint256) public minBuyInNineTier;
 
     // CONSTRUCTOR
     constructor(
-        uint _maxCap,
+        uint256 _maxCap,
         uint256 _saleStartTime,
         uint256 _saleEndTime,
         address payable _projectOwner,
@@ -138,7 +138,7 @@ contract SeedifyFundsContract is Ownable {
         uint256 _tierSevenValue,
         // uint256 _tierEightValue,
         // uint256 _tierNineValue,
-        uint _totalparticipants
+        uint256 _totalparticipants
     ) {
         maxCap = _maxCap;
         saleStartTime = _saleStartTime;
@@ -309,8 +309,8 @@ contract SeedifyFundsContract is Ownable {
 
     // check the address in whitelist tier one
     function getWhitelistOne(address _address) public view returns (bool) {
-        uint i;
-        uint length = whitelistTierOne.length;
+        uint256 i;
+        uint256 length = whitelistTierOne.length;
         for (i = 0; i < length; i++) {
             address _addressArr = whitelistTierOne[i];
             if (_addressArr == _address) {
@@ -322,8 +322,8 @@ contract SeedifyFundsContract is Ownable {
 
     // check the address in whitelist tier two
     function getWhitelistTwo(address _address) public view returns (bool) {
-        uint i;
-        uint length = whitelistTierTwo.length;
+        uint256 i;
+        uint256 length = whitelistTierTwo.length;
         for (i = 0; i < length; i++) {
             address _addressArr = whitelistTierTwo[i];
             if (_addressArr == _address) {
@@ -335,8 +335,8 @@ contract SeedifyFundsContract is Ownable {
 
     // check the address in whitelist tier three
     function getWhitelistThree(address _address) public view returns (bool) {
-        uint i;
-        uint length = whitelistTierThree.length;
+        uint256 i;
+        uint256 length = whitelistTierThree.length;
         for (i = 0; i < length; i++) {
             address _addressArr = whitelistTierThree[i];
             if (_addressArr == _address) {
@@ -348,8 +348,8 @@ contract SeedifyFundsContract is Ownable {
 
     // check the address in whitelist tier Four
     function getWhitelistFour(address _address) public view returns (bool) {
-        uint i;
-        uint length = whitelistTierFour.length;
+        uint256 i;
+        uint256 length = whitelistTierFour.length;
         for (i = 0; i < length; i++) {
             address _addressArr = whitelistTierFour[i];
             if (_addressArr == _address) {
@@ -361,8 +361,8 @@ contract SeedifyFundsContract is Ownable {
 
     // check the address in whitelist tier Five
     function getWhitelistFive(address _address) public view returns (bool) {
-        uint i;
-        uint length = whitelistTierFive.length;
+        uint256 i;
+        uint256 length = whitelistTierFive.length;
         for (i = 0; i < length; i++) {
             address _addressArr = whitelistTierFive[i];
             if (_addressArr == _address) {
@@ -374,8 +374,8 @@ contract SeedifyFundsContract is Ownable {
 
     // check the address in whitelist tier Six
     function getWhitelistSix(address _address) public view returns (bool) {
-        uint i;
-        uint length = whitelistTierSix.length;
+        uint256 i;
+        uint256 length = whitelistTierSix.length;
         for (i = 0; i < length; i++) {
             address _addressArr = whitelistTierSix[i];
             if (_addressArr == _address) {
@@ -387,8 +387,8 @@ contract SeedifyFundsContract is Ownable {
 
     // check the address in whitelist tier Seven
     function getWhitelistSeven(address _address) public view returns (bool) {
-        uint i;
-        uint length = whitelistTierSeven.length;
+        uint256 i;
+        uint256 length = whitelistTierSeven.length;
         for (i = 0; i < length; i++) {
             address _addressArr = whitelistTierSeven[i];
             if (_addressArr == _address) {
@@ -400,8 +400,8 @@ contract SeedifyFundsContract is Ownable {
 
     // check the address in whitelist tier Eight
     function getWhitelistEight(address _address) public view returns (bool) {
-        uint i;
-        uint length = whitelistTierEight.length;
+        uint256 i;
+        uint256 length = whitelistTierEight.length;
         for (i = 0; i < length; i++) {
             address _addressArr = whitelistTierEight[i];
             if (_addressArr == _address) {
@@ -413,8 +413,8 @@ contract SeedifyFundsContract is Ownable {
 
     // check the address in whitelist tier Nine
     function getWhitelistNine(address _address) public view returns (bool) {
-        uint i;
-        uint length = whitelistTierNine.length;
+        uint256 i;
+        uint256 length = whitelistTierNine.length;
         for (i = 0; i < length; i++) {
             address _addressArr = whitelistTierNine[i];
             if (_addressArr == _address) {
@@ -441,41 +441,23 @@ contract SeedifyFundsContract is Ownable {
      * https://solidity.readthedocs.io/en/v0.5.11/security-considerations.html#use-the-checks-effects-interactions-pattern[checks-effects-interactions pattern].
      */
     function sendValue(address payable recipient, uint256 amount) internal {
-        require(
-            address(this).balance >= amount,
-            "Address: insufficient balance"
-        );
+        require(address(this).balance >= amount, "Address: insufficient balance");
 
         // solhint-disable-next-line avoid-low-level-calls, avoid-call-value
-        (bool success, ) = recipient.call{value: amount}("");
-        require(
-            success,
-            "Address: unable to send value, recipient may have reverted"
-        );
+        (bool success,) = recipient.call{value: amount}("");
+        require(success, "Address: unable to send value, recipient may have reverted");
     }
 
     // send bnb to the contract address
     receive() external payable {
-        require(
-            block.timestamp >= saleStartTime,
-            "The sale is not started yet "
-        ); // solhint-disable
+        require(block.timestamp >= saleStartTime, "The sale is not started yet "); // solhint-disable
         require(block.timestamp <= saleEndTime, "The sale is closed"); // solhint-disable
-        require(
-            totalBnbReceivedInAllTier + msg.value <= maxCap,
-            "buyTokens: purchase would exceed max cap"
-        );
+        require(totalBnbReceivedInAllTier + msg.value <= maxCap, "buyTokens: purchase would exceed max cap");
 
         if (getWhitelistOne(msg.sender)) {
             minBuyInOneTier[msg.sender] += msg.value;
-            require(
-                minBuyInOneTier[msg.sender] >= minAllocaPerUserTierOne,
-                "your purchasing Power is so Low"
-            );
-            require(
-                totalBnbInTierOne + msg.value <= tierOneMaxCap,
-                "buyTokens: purchase would exceed Tier one max cap"
-            );
+            require(minBuyInOneTier[msg.sender] >= minAllocaPerUserTierOne, "your purchasing Power is so Low");
+            require(totalBnbInTierOne + msg.value <= tierOneMaxCap, "buyTokens: purchase would exceed Tier one max cap");
             require(
                 buyInOneTier[msg.sender] + msg.value <= maxAllocaPerUserTierOne,
                 "buyTokens:You are investing more than your tier-1 limit!"
@@ -487,14 +469,8 @@ contract SeedifyFundsContract is Ownable {
             sendValue(projectOwner, address(this).balance);
         } else if (getWhitelistTwo(msg.sender)) {
             minBuyInTwoTier[msg.sender] += msg.value;
-            require(
-                minBuyInTwoTier[msg.sender] >= minAllocaPerUserTierTwo,
-                "your purchasing Power is so Low"
-            );
-            require(
-                totalBnbInTierTwo + msg.value <= tierTwoMaxCap,
-                "buyTokens: purchase would exceed Tier two max cap"
-            );
+            require(minBuyInTwoTier[msg.sender] >= minAllocaPerUserTierTwo, "your purchasing Power is so Low");
+            require(totalBnbInTierTwo + msg.value <= tierTwoMaxCap, "buyTokens: purchase would exceed Tier two max cap");
             require(
                 buyInTwoTier[msg.sender] + msg.value <= maxAllocaPerUserTierTwo,
                 "buyTokens:You are investing more than your tier-2 limit!"
@@ -506,13 +482,9 @@ contract SeedifyFundsContract is Ownable {
             sendValue(projectOwner, address(this).balance);
         } else if (getWhitelistThree(msg.sender)) {
             minBuyInThreeTier[msg.sender] += msg.value;
+            require(minBuyInThreeTier[msg.sender] >= minAllocaPerUserTierThree, "your purchasing Power is so Low");
             require(
-                minBuyInThreeTier[msg.sender] >= minAllocaPerUserTierThree,
-                "your purchasing Power is so Low"
-            );
-            require(
-                buyInThreeTier[msg.sender] + msg.value <=
-                    maxAllocaPerUserTierThree,
+                buyInThreeTier[msg.sender] + msg.value <= maxAllocaPerUserTierThree,
                 "buyTokens:You are investing more than your tier-3 limit!"
             );
             require(
@@ -526,17 +498,12 @@ contract SeedifyFundsContract is Ownable {
             sendValue(projectOwner, address(this).balance);
         } else if (getWhitelistFour(msg.sender)) {
             minBuyInFourTier[msg.sender] += msg.value;
+            require(minBuyInFourTier[msg.sender] >= minAllocaPerUserTierFour, "your purchasing Power is so Low");
             require(
-                minBuyInFourTier[msg.sender] >= minAllocaPerUserTierFour,
-                "your purchasing Power is so Low"
+                totalBnbInTierFour + msg.value <= tierFourMaxCap, "buyTokens: purchase would exceed Tier Four max cap"
             );
             require(
-                totalBnbInTierFour + msg.value <= tierFourMaxCap,
-                "buyTokens: purchase would exceed Tier Four max cap"
-            );
-            require(
-                buyInFourTier[msg.sender] + msg.value <=
-                    maxAllocaPerUserTierFour,
+                buyInFourTier[msg.sender] + msg.value <= maxAllocaPerUserTierFour,
                 "buyTokens:You are investing more than your tier-4 limit!"
             );
             buyInFourTier[msg.sender] += msg.value;
@@ -545,17 +512,12 @@ contract SeedifyFundsContract is Ownable {
             sendValue(projectOwner, address(this).balance);
         } else if (getWhitelistFive(msg.sender)) {
             minBuyInFiveTier[msg.sender] += msg.value;
+            require(minBuyInFiveTier[msg.sender] >= minAllocaPerUserTierFive, "your purchasing Power is so Low");
             require(
-                minBuyInFiveTier[msg.sender] >= minAllocaPerUserTierFive,
-                "your purchasing Power is so Low"
+                totalBnbInTierFive + msg.value <= tierFiveMaxCap, "buyTokens: purchase would exceed Tier Five max cap"
             );
             require(
-                totalBnbInTierFive + msg.value <= tierFiveMaxCap,
-                "buyTokens: purchase would exceed Tier Five max cap"
-            );
-            require(
-                buyInFiveTier[msg.sender] + msg.value <=
-                    maxAllocaPerUserTierFive,
+                buyInFiveTier[msg.sender] + msg.value <= maxAllocaPerUserTierFive,
                 "buyTokens:You are investing more than your tier-5 limit!"
             );
             buyInFiveTier[msg.sender] += msg.value;
@@ -564,14 +526,8 @@ contract SeedifyFundsContract is Ownable {
             sendValue(projectOwner, address(this).balance);
         } else if (getWhitelistSix(msg.sender)) {
             minBuyInSixTier[msg.sender] += msg.value;
-            require(
-                minBuyInSixTier[msg.sender] >= minAllocaPerUserTierSix,
-                "your purchasing Power is so Low"
-            );
-            require(
-                totalBnbInTierSix + msg.value <= tierSixMaxCap,
-                "buyTokens: purchase would exceed Tier Six max cap"
-            );
+            require(minBuyInSixTier[msg.sender] >= minAllocaPerUserTierSix, "your purchasing Power is so Low");
+            require(totalBnbInTierSix + msg.value <= tierSixMaxCap, "buyTokens: purchase would exceed Tier Six max cap");
             require(
                 buyInSixTier[msg.sender] + msg.value <= maxAllocaPerUserTierSix,
                 "buyTokens:You are investing more than your tier-6 limit!"
@@ -582,17 +538,13 @@ contract SeedifyFundsContract is Ownable {
             sendValue(projectOwner, address(this).balance);
         } else if (getWhitelistSeven(msg.sender)) {
             minBuyInSevenTier[msg.sender] += msg.value;
-            require(
-                minBuyInSevenTier[msg.sender] >= minAllocaPerUserTierSeven,
-                "your purchasing Power is so Low"
-            );
+            require(minBuyInSevenTier[msg.sender] >= minAllocaPerUserTierSeven, "your purchasing Power is so Low");
             require(
                 totalBnbInTierSeven + msg.value <= tierSevenMaxCap,
                 "buyTokens: purchase would exceed Tier Seven max cap"
             );
             require(
-                buyInSevenTier[msg.sender] + msg.value <=
-                    maxAllocaPerUserTierSeven,
+                buyInSevenTier[msg.sender] + msg.value <= maxAllocaPerUserTierSeven,
                 "buyTokens:You are investing more than your tier-7 limit!"
             );
             buyInSevenTier[msg.sender] += msg.value;
@@ -601,17 +553,13 @@ contract SeedifyFundsContract is Ownable {
             sendValue(projectOwner, address(this).balance);
         } else if (getWhitelistEight(msg.sender)) {
             minBuyInEightTier[msg.sender] += msg.value;
-            require(
-                minBuyInEightTier[msg.sender] >= minAllocaPerUserTierEight,
-                "your purchasing Power is so Low"
-            );
+            require(minBuyInEightTier[msg.sender] >= minAllocaPerUserTierEight, "your purchasing Power is so Low");
             require(
                 totalBnbInTierEight + msg.value <= tierEightMaxCap,
                 "buyTokens: purchase would exceed Tier Eight max cap"
             );
             require(
-                buyInEightTier[msg.sender] + msg.value <=
-                    maxAllocaPerUserTierEight,
+                buyInEightTier[msg.sender] + msg.value <= maxAllocaPerUserTierEight,
                 "buyTokens:You are investing more than your tier-8 limit!"
             );
             buyInEightTier[msg.sender] += msg.value;
@@ -620,17 +568,12 @@ contract SeedifyFundsContract is Ownable {
             sendValue(projectOwner, address(this).balance);
         } else if (getWhitelistNine(msg.sender)) {
             minBuyInNineTier[msg.sender] += msg.value;
+            require(minBuyInNineTier[msg.sender] >= minAllocaPerUserTierNine, "your purchasing Power is so Low");
             require(
-                minBuyInNineTier[msg.sender] >= minAllocaPerUserTierNine,
-                "your purchasing Power is so Low"
+                totalBnbInTierNine + msg.value <= tierNineMaxCap, "buyTokens: purchase would exceed Tier Nine max cap"
             );
             require(
-                totalBnbInTierNine + msg.value <= tierNineMaxCap,
-                "buyTokens: purchase would exceed Tier Nine max cap"
-            );
-            require(
-                buyInNineTier[msg.sender] + msg.value <=
-                    maxAllocaPerUserTierNine,
+                buyInNineTier[msg.sender] + msg.value <= maxAllocaPerUserTierNine,
                 "buyTokens:You are investing more than your tier-9 limit!"
             );
             buyInNineTier[msg.sender] += msg.value;

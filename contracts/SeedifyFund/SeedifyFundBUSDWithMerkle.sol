@@ -5,37 +5,22 @@ pragma solidity ^0.8.9;
  * @dev Interface of the ERC20 standard as defined in the EIP. Does not include
  * the optional functions; to access them see `ERC20Detailed`.
  */
-
 interface IERC20 {
     function totalSupply() external view returns (uint256);
 
     function balanceOf(address account) external view returns (uint256);
 
-    function transfer(
-        address recipient,
-        uint256 amount
-    ) external returns (bool);
+    function transfer(address recipient, uint256 amount) external returns (bool);
 
-    function allowance(
-        address owner,
-        address spender
-    ) external view returns (uint256);
+    function allowance(address owner, address spender) external view returns (uint256);
 
     function approve(address spender, uint256 amount) external returns (bool);
 
-    function transferFrom(
-        address sender,
-        address recipient,
-        uint256 amount
-    ) external returns (bool);
+    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
 
     event Transfer(address indexed from, address indexed to, uint256 value);
 
-    event Approval(
-        address indexed owner,
-        address indexed spender,
-        uint256 value
-    );
+    event Approval(address indexed owner, address indexed spender, uint256 value);
 }
 
 library SafeMath {
@@ -91,10 +76,7 @@ abstract contract Context {
 abstract contract Ownable is Context {
     address private _owner;
 
-    event OwnershipTransferred(
-        address indexed previousOwner,
-        address indexed newOwner
-    );
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 
     constructor() {
         _transferOwnership(_msgSender());
@@ -114,10 +96,7 @@ abstract contract Ownable is Context {
     }
 
     function transferOwnership(address newOwner) public virtual onlyOwner {
-        require(
-            newOwner != address(0),
-            "Ownable: new owner is the zero address"
-        );
+        require(newOwner != address(0), "Ownable: new owner is the zero address");
         _transferOwnership(newOwner);
     }
 
@@ -133,20 +112,11 @@ library SafeERC20 {
         require(token.transfer(to, value));
     }
 
-    function safeTransferFrom(
-        IERC20 token,
-        address from,
-        address to,
-        uint256 value
-    ) internal {
+    function safeTransferFrom(IERC20 token, address from, address to, uint256 value) internal {
         require(token.transferFrom(from, to, value));
     }
 
-    function safeApprove(
-        IERC20 token,
-        address spender,
-        uint256 value
-    ) internal {
+    function safeApprove(IERC20 token, address spender, uint256 value) internal {
         require(token.approve(spender, value));
     }
 }
@@ -188,18 +158,11 @@ abstract contract Pausable is Context {
 }
 
 library MerkleProof {
-    function verify(
-        bytes32[] memory proof,
-        bytes32 root,
-        bytes32 leaf
-    ) internal pure returns (bool) {
+    function verify(bytes32[] memory proof, bytes32 root, bytes32 leaf) internal pure returns (bool) {
         return processProof(proof, leaf) == root;
     }
 
-    function processProof(
-        bytes32[] memory proof,
-        bytes32 leaf
-    ) internal pure returns (bytes32) {
+    function processProof(bytes32[] memory proof, bytes32 leaf) internal pure returns (bytes32) {
         bytes32 computedHash = leaf;
         for (uint256 i = 0; i < proof.length; i++) {
             bytes32 proofElement = proof[i];
@@ -214,10 +177,7 @@ library MerkleProof {
         return computedHash;
     }
 
-    function _efficientHash(
-        bytes32 a,
-        bytes32 b
-    ) private pure returns (bytes32 value) {
+    function _efficientHash(bytes32 a, bytes32 b) private pure returns (bytes32 value) {
         assembly {
             mstore(0x00, a)
             mstore(0x20, b)
@@ -256,11 +216,7 @@ contract SeedifyLaunchpad is Ownable, Pausable {
         uint256 investedAmount;
     }
 
-    event UserInvestment(
-        address indexed user,
-        uint256 amount,
-        uint8 indexed phase
-    );
+    event UserInvestment(address indexed user, uint256 amount, uint8 indexed phase);
 
     mapping(uint256 => Tier) public tierDetails;
     mapping(address => user) public userDetails;
@@ -279,10 +235,7 @@ contract SeedifyLaunchpad is Ownable, Pausable {
         name = _name;
         require(_maxCap > 0, "Zero max cap");
         maxCap = _maxCap;
-        require(
-            _saleStart > block.timestamp && _saleEnd > _saleStart,
-            "Invalid timings"
-        );
+        require(_saleStart > block.timestamp && _saleEnd > _saleStart, "Invalid timings");
         saleStart = _saleStart;
         saleEnd = _saleEnd;
         require(_noOfTiers > 0, "Zero tiers");
@@ -296,6 +249,7 @@ contract SeedifyLaunchpad is Ownable, Pausable {
         totalUsers = _totalUsers;
         phaseNo = _phaseNo;
     }
+
     function updateMaxCap(uint256 _maxCap) public onlyOwner {
         require(_maxCap > 0, "Zero max cap");
         maxCap = _maxCap;
@@ -307,10 +261,7 @@ contract SeedifyLaunchpad is Ownable, Pausable {
     }
 
     function updateEndTime(uint256 newSaleEnd) public onlyOwner {
-        require(
-            newSaleEnd > saleStart && newSaleEnd > block.timestamp,
-            "Sale end can't be less than sale start"
-        );
+        require(newSaleEnd > saleStart && newSaleEnd > block.timestamp, "Sale end can't be less than sale start");
         saleEnd = newSaleEnd;
     }
 
@@ -330,28 +281,17 @@ contract SeedifyLaunchpad is Ownable, Pausable {
         uint256[] memory _tierUsers
     ) external onlyOwner {
         require(
-            _tier.length == _maxTierCap.length &&
-                _maxTierCap.length == _minUserCap.length &&
-                _minUserCap.length == _maxUserCap.length &&
-                _maxUserCap.length == _tierUsers.length,
+            _tier.length == _maxTierCap.length && _maxTierCap.length == _minUserCap.length
+                && _minUserCap.length == _maxUserCap.length && _maxUserCap.length == _tierUsers.length,
             "Lengths mismatch"
         );
 
         for (uint256 i = 0; i < _tier.length; i++) {
-            require(
-                _tier[i] > 0 && _tier[i] <= noOfTiers,
-                "Invalid tier number"
-            );
+            require(_tier[i] > 0 && _tier[i] <= noOfTiers, "Invalid tier number");
             require(_maxTierCap[i] > 0, "Invalid max tier cap amount");
             require(_maxUserCap[i] > 0, "Invalid max user cap amount");
             require(_tierUsers[i] > 0, "Zero users in tier");
-            tierDetails[_tier[i]] = Tier(
-                _maxTierCap[i],
-                _minUserCap[i],
-                _maxUserCap[i],
-                0,
-                _tierUsers[i]
-            );
+            tierDetails[_tier[i]] = Tier(_maxTierCap[i], _minUserCap[i], _maxUserCap[i], 0, _tierUsers[i]);
         }
     }
 
@@ -359,43 +299,25 @@ contract SeedifyLaunchpad is Ownable, Pausable {
         rootHash = _hash;
     }
 
-    function buyTokens(
-        uint256 amount,
-        uint256 userTier,
-        bytes32[] calldata proof
-    ) external whenNotPaused _hasAllowance(msg.sender, amount) returns (bool) {
-        require(
-            verify(msg.sender, userTier, proof, rootHash),
-            "User not authenticated"
-        );
+    function buyTokens(uint256 amount, uint256 userTier, bytes32[] calldata proof)
+        external
+        whenNotPaused
+        _hasAllowance(msg.sender, amount)
+        returns (bool)
+    {
+        require(verify(msg.sender, userTier, proof, rootHash), "User not authenticated");
         require(block.timestamp >= saleStart, "Sale not started yet");
         require(block.timestamp <= saleEnd, "Sale Ended");
-        require(
-            totalBUSDReceivedInAllTier.add(amount) <= maxCap,
-            "Exceeds pool max cap"
-        );
+        require(totalBUSDReceivedInAllTier.add(amount) <= maxCap, "Exceeds pool max cap");
         require(userTier > 0 && userTier <= noOfTiers, "User not whitelisted");
-        uint256 expectedAmount = amount.add(
-            userDetails[msg.sender].investedAmount
-        );
-        require(
-            expectedAmount >= tierDetails[userTier].minUserCap,
-            "Amount less than user min cap"
-        );
-        require(
-            expectedAmount <= tierDetails[userTier].maxUserCap,
-            "Amount greater than user max cap"
-        );
+        uint256 expectedAmount = amount.add(userDetails[msg.sender].investedAmount);
+        require(expectedAmount >= tierDetails[userTier].minUserCap, "Amount less than user min cap");
+        require(expectedAmount <= tierDetails[userTier].maxUserCap, "Amount greater than user max cap");
 
-        require(
-            expectedAmount <= tierDetails[userTier].maxTierCap,
-            "Amount greater than the tier max cap"
-        );
+        require(expectedAmount <= tierDetails[userTier].maxTierCap, "Amount greater than the tier max cap");
 
         totalBUSDReceivedInAllTier = totalBUSDReceivedInAllTier.add(amount);
-        tierDetails[userTier].amountRaised = tierDetails[userTier]
-            .amountRaised
-            .add(amount);
+        tierDetails[userTier].amountRaised = tierDetails[userTier].amountRaised.add(amount);
         userDetails[msg.sender].tier = userTier;
         userDetails[msg.sender].investedAmount = expectedAmount;
         ERC20Interface.safeTransferFrom(msg.sender, projectOwner, amount);
@@ -419,20 +341,12 @@ contract SeedifyLaunchpad is Ownable, Pausable {
      * @param proof Merkle proof of the user
      * @param _rootHash Root hash of the merkle tree
      */
-    function verify(
-        address _wallet,
-        uint256 _tier,
-        bytes32[] calldata proof,
-        bytes32 _rootHash
-    ) public view returns (bool) {
-        return (
-            MerkleProof.verify(
-                proof,
-                _rootHash,
-                keccak256(
-                    abi.encode(_wallet, _tier, block.chainid, address(this))
-                )
-            )
-        );
+    function verify(address _wallet, uint256 _tier, bytes32[] calldata proof, bytes32 _rootHash)
+        public
+        view
+        returns (bool)
+    {
+        return
+            (MerkleProof.verify(proof, _rootHash, keccak256(abi.encode(_wallet, _tier, block.chainid, address(this)))));
     }
 }

@@ -1,5 +1,5 @@
 /**
- *Submitted for verification at BscScan.com on 2021-12-14
+ * Submitted for verification at BscScan.com on 2021-12-14
  */
 
 // SPDX-License-Identifier: UNLICENSED
@@ -9,37 +9,22 @@ pragma solidity ^0.8.9;
  * @dev Interface of the ERC20 standard as defined in the EIP. Does not include
  * the optional functions; to access them see `ERC20Detailed`.
  */
-
 interface IERC20 {
     function totalSupply() external view returns (uint256);
 
     function balanceOf(address account) external view returns (uint256);
 
-    function transfer(
-        address recipient,
-        uint256 amount
-    ) external returns (bool);
+    function transfer(address recipient, uint256 amount) external returns (bool);
 
-    function allowance(
-        address owner,
-        address spender
-    ) external view returns (uint256);
+    function allowance(address owner, address spender) external view returns (uint256);
 
     function approve(address spender, uint256 amount) external returns (bool);
 
-    function transferFrom(
-        address sender,
-        address recipient,
-        uint256 amount
-    ) external returns (bool);
+    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
 
     event Transfer(address indexed from, address indexed to, uint256 value);
 
-    event Approval(
-        address indexed owner,
-        address indexed spender,
-        uint256 value
-    );
+    event Approval(address indexed owner, address indexed spender, uint256 value);
 }
 
 // File: openzeppelin-solidity/contracts/math/SafeMath.sol
@@ -103,10 +88,7 @@ pragma solidity ^0.8.9;
 abstract contract Ownable is Context {
     address private _owner;
 
-    event OwnershipTransferred(
-        address indexed previousOwner,
-        address indexed newOwner
-    );
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 
     constructor() {
         _transferOwnership(_msgSender());
@@ -126,10 +108,7 @@ abstract contract Ownable is Context {
     }
 
     function transferOwnership(address newOwner) public virtual onlyOwner {
-        require(
-            newOwner != address(0),
-            "Ownable: new owner is the zero address"
-        );
+        require(newOwner != address(0), "Ownable: new owner is the zero address");
         _transferOwnership(newOwner);
     }
 
@@ -145,20 +124,11 @@ library SafeERC20 {
         require(token.transfer(to, value));
     }
 
-    function safeTransferFrom(
-        IERC20 token,
-        address from,
-        address to,
-        uint256 value
-    ) internal {
+    function safeTransferFrom(IERC20 token, address from, address to, uint256 value) internal {
         require(token.transferFrom(from, to, value));
     }
 
-    function safeApprove(
-        IERC20 token,
-        address spender,
-        uint256 value
-    ) internal {
+    function safeApprove(IERC20 token, address spender, uint256 value) internal {
         require(token.approve(spender, value));
     }
 }
@@ -228,11 +198,7 @@ contract SeedifyLaunchpad is Ownable, Pausable {
         uint256 investedAmount;
     }
 
-    event UserInvestment(
-        address indexed user,
-        uint256 amount,
-        uint8 indexed phase
-    );
+    event UserInvestment(address indexed user, uint256 amount, uint8 indexed phase);
 
     mapping(uint256 => Tier) public tierDetails;
     mapping(address => user) public userDetails;
@@ -251,10 +217,7 @@ contract SeedifyLaunchpad is Ownable, Pausable {
         name = _name;
         require(_maxCap > 0, "Zero max cap");
         maxCap = _maxCap;
-        require(
-            _saleStart > block.timestamp && _saleEnd > _saleStart,
-            "Invalid timings"
-        );
+        require(_saleStart > block.timestamp && _saleEnd > _saleStart, "Invalid timings");
         saleStart = _saleStart;
         saleEnd = _saleEnd;
         require(_noOfTiers > 0, "Zero tiers");
@@ -280,10 +243,7 @@ contract SeedifyLaunchpad is Ownable, Pausable {
     }
 
     function updateEndTime(uint256 newSaleEnd) public onlyOwner {
-        require(
-            newSaleEnd > saleStart && newSaleEnd > block.timestamp,
-            "Sale end can't be less than sale start"
-        );
+        require(newSaleEnd > saleStart && newSaleEnd > block.timestamp, "Sale end can't be less than sale start");
         saleEnd = newSaleEnd;
     }
 
@@ -303,35 +263,21 @@ contract SeedifyLaunchpad is Ownable, Pausable {
         uint256[] memory _tierUsers
     ) external onlyOwner {
         require(
-            _tier.length == _maxTierCap.length &&
-                _maxTierCap.length == _minUserCap.length &&
-                _minUserCap.length == _maxUserCap.length &&
-                _maxUserCap.length == _tierUsers.length,
+            _tier.length == _maxTierCap.length && _maxTierCap.length == _minUserCap.length
+                && _minUserCap.length == _maxUserCap.length && _maxUserCap.length == _tierUsers.length,
             "Lengths mismatch"
         );
 
         for (uint256 i = 0; i < _tier.length; i++) {
-            require(
-                _tier[i] > 0 && _tier[i] <= noOfTiers,
-                "Invalid tier number"
-            );
+            require(_tier[i] > 0 && _tier[i] <= noOfTiers, "Invalid tier number");
             require(_maxTierCap[i] > 0, "Invalid max tier cap amount");
             require(_maxUserCap[i] > 0, "Invalid max user cap amount");
             require(_tierUsers[i] > 0, "Zero users in tier");
-            tierDetails[_tier[i]] = Tier(
-                _maxTierCap[i],
-                _minUserCap[i],
-                _maxUserCap[i],
-                0,
-                _tierUsers[i]
-            );
+            tierDetails[_tier[i]] = Tier(_maxTierCap[i], _minUserCap[i], _maxUserCap[i], 0, _tierUsers[i]);
         }
     }
 
-    function updateUsers(
-        address[] memory _users,
-        uint256[] memory _tiers
-    ) external onlyOwner {
+    function updateUsers(address[] memory _users, uint256[] memory _tiers) external onlyOwner {
         require(_users.length == _tiers.length, "Array length mismatch");
         for (uint256 i = 0; i < _users.length; i++) {
             require(_tiers[i] > 0 && _tiers[i] <= noOfTiers, "Invalid tier");
@@ -339,38 +285,20 @@ contract SeedifyLaunchpad is Ownable, Pausable {
         }
     }
 
-    function buyTokens(
-        uint256 amount
-    ) external whenNotPaused _hasAllowance(msg.sender, amount) returns (bool) {
+    function buyTokens(uint256 amount) external whenNotPaused _hasAllowance(msg.sender, amount) returns (bool) {
         require(block.timestamp >= saleStart, "Sale not started yet");
         require(block.timestamp <= saleEnd, "Sale Ended");
-        require(
-            totalBUSDReceivedInAllTier.add(amount) <= maxCap,
-            "Exceeds pool max cap"
-        );
+        require(totalBUSDReceivedInAllTier.add(amount) <= maxCap, "Exceeds pool max cap");
         uint256 userTier = userDetails[msg.sender].tier;
         require(userTier > 0 && userTier <= noOfTiers, "User not whitelisted");
-        uint256 expectedAmount = amount.add(
-            userDetails[msg.sender].investedAmount
-        );
-        require(
-            expectedAmount >= tierDetails[userTier].minUserCap,
-            "Amount less than user min cap"
-        );
-        require(
-            expectedAmount <= tierDetails[userTier].maxUserCap,
-            "Amount greater than user max cap"
-        );
+        uint256 expectedAmount = amount.add(userDetails[msg.sender].investedAmount);
+        require(expectedAmount >= tierDetails[userTier].minUserCap, "Amount less than user min cap");
+        require(expectedAmount <= tierDetails[userTier].maxUserCap, "Amount greater than user max cap");
 
-        require(
-            expectedAmount <= tierDetails[userTier].maxTierCap,
-            "Amount greater than the tier max cap"
-        );
+        require(expectedAmount <= tierDetails[userTier].maxTierCap, "Amount greater than the tier max cap");
 
         totalBUSDReceivedInAllTier = totalBUSDReceivedInAllTier.add(amount);
-        tierDetails[userTier].amountRaised = tierDetails[userTier]
-            .amountRaised
-            .add(amount);
+        tierDetails[userTier].amountRaised = tierDetails[userTier].amountRaised.add(amount);
         userDetails[msg.sender].investedAmount = expectedAmount;
         ERC20Interface.safeTransferFrom(msg.sender, projectOwner, amount);
         emit UserInvestment(msg.sender, expectedAmount, phaseNo);
